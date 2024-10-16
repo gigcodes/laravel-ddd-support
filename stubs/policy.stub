@@ -1,0 +1,121 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+use {{ rootNamespace }}Models\User;
+use Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Policies\BasePolicy;
+
+class {{ class }} extends BasePolicy
+{
+    use HandlesAuthorization;
+
+    /**
+     * @var string
+     */
+    protected string $model = {{ model }}::class;
+
+    /**
+     * Determine whether the user can view any models.
+     *
+     * @param  User $user
+     *
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewAny(User $user): Response
+    {
+        return $this->check(__FUNCTION__);
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     *
+     * @param  User $user
+     * @param  {{ model }}  ${{ modelVariableName }}
+     *
+     * @return Response
+     */
+    public function view(User $user, {{ model }} ${{ modelVariableName }}): Response
+    {
+        return $this->check(__FUNCTION__, ${{ modelVariableName }});
+    }
+
+    /**
+     * Determine whether the user can create models.
+     *
+     * @param User $user
+     *
+     * @return Response
+     */
+    public function create(User $user): Response
+    {
+        return $this->check(__FUNCTION__);
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param  User $user
+     * @param  {{ model }} ${{ modelVariableName }}
+     *
+     * @return Response
+     */
+    public function update(User $user, {{ model }} ${{ modelVariableName }}): Response
+    {
+        return $this->check(__FUNCTION__, ${{ modelVariableName }});
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     *
+     * @param  User $user
+     * @param  {{ model }} ${{ modelVariableName }}
+     *
+     * @return Response
+     */
+    public function delete(User $user, {{ model }} ${{ modelVariableName }}): Response
+    {
+        return $this->check(__FUNCTION__, ${{ modelVariableName }});
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     *
+     * @param  User $user
+     * @param  {{ model }} ${{ modelVariableName }}
+     *
+     * @return Response
+     */
+    public function restore(User $user, {{ model }} ${{ modelVariableName }}): Response
+    {
+        return $this->check(__FUNCTION__, ${{ modelVariableName }});
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     *
+     * @param  User $user
+     * @param  {{ model }} ${{ modelVariableName }}
+     *
+     * @return Response
+     */
+    public function forceDelete(User $user, {{ model }} ${{ modelVariableName }}): Response
+    {
+        return $this->check(__FUNCTION__, ${{ modelVariableName }});
+    }
+
+    /**
+     * Determine whether the user can toggle the status on the model.
+     *
+     * @param User $user
+     * @param {{ model }} ${{ modelVariableName }}
+     *
+     * @return Response
+     */
+    public function toggleStatus(User $user, {{ model }} ${{ modelVariableName }}): Response
+    {
+        return $this->check(__FUNCTION__, ${{ modelVariableName }});
+    }
+}

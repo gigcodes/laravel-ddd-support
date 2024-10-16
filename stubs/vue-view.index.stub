@@ -1,0 +1,45 @@
+<template>
+    <app-layout
+        title="{{ modelPluralTitle }}"
+        :links="actions"
+    >
+        <data-table
+            :data="{{ modelPluralVariableName }}"
+
+            :headers="headers"
+            inertia
+        >
+            <template #actions="{data: {{ modelVariableName }}}">
+                <actions
+                    :edit="route('{{ routePrefix }}{{ modelHyphenatedSnakedPluralVariableName }}.edit', {{{ modelSnakedVariableName }}: {{ modelVariableName }}.id})"
+                    :delete="route('{{ routePrefix }}{{ modelHyphenatedSnakedPluralVariableName }}.destroy', {{{ modelSnakedVariableName }}: {{ modelVariableName }}.id})"
+                />
+            </template>
+        </data-table>
+    </app-layout>
+</template>
+
+<script setup>
+    import AppLayout from '@/Admin/Layouts/AppLayout.vue'
+    import DataTable from '@/Admin/Components/DataTable/DataTable.vue'
+    import Actions from '@/Admin/Components/Actions/Actions.vue'
+    import { reactive } from 'vue'
+
+    defineProps({
+        {{ modelPluralVariableName }}: Object,
+    })
+
+    const actions = reactive([
+        {
+            label : 'Create',
+            href  : route('{{ routePrefix }}{{ modelHyphenatedSnakedPluralVariableName }}.create')
+        }
+    ])
+
+    const headers = reactive([
+        {
+            label : '#',
+            value : 'id'
+        },
+    ])
+</script>

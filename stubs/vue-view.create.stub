@@ -1,0 +1,20 @@
+<template>
+    <app-layout
+        title="Create {{ modelTitle }}"
+        :links="form?.actions(true)"
+    >
+        <page-form
+            ref="form"
+            :url=""
+            method="post"
+        />
+    </app-layout>
+</template>
+
+<script setup>
+    import { ref } from 'vue'
+    import AppLayout from '@/Admin/Layouts/AppLayout.vue'
+    import PageForm from './Partials/Form.vue'
+
+    const form = ref(null)
+</script>

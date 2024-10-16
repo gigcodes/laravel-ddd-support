@@ -1,0 +1,27 @@
+<template>
+    <app-layout
+        title="Edit {{ modelTitle }}"
+        :links="form?.actions(true, 'edit')"
+    >
+        <page-form
+            ref="form"
+
+            :url="route('{{ routePrefix }}{{ modelHyphenatedSnakedPluralVariableName }}.update', { {{ modelSnakedVariableName }}: {{ modelVariableName }}?.id })"
+            method="put"
+
+            :{{ modelVariableName }}="{{ modelVariableName }}"
+        />
+    </app-layout>
+</template>
+
+<script setup>
+    import { ref } from 'vue'
+    import AppLayout from '@/Admin/Layouts/AppLayout.vue'
+    import PageForm from './Partials/Form.vue'
+
+    defineProps({
+        {{ modelVariableName }}: Object
+    })
+
+    const form = ref(null)
+</script>

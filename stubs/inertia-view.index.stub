@@ -1,0 +1,102 @@
+<template>
+    <app-layout
+        title="{{ modelPluralTitle }}"
+    >
+        <div class="sm:flex sm:items-center">
+            <div class="sm:flex-auto flex w-full justify-between">
+                <p class="mt-2 text-sm text-gray-700">
+                    All {{ modelPluralTitle }}
+                </p>
+                <Link :href="route('{{ routePrefix }}{{ modelHyphenatedSnakedPluralVariableName }}.create')">
+                    <btn
+                        class="mb-2 self-end"
+                        type="primary"
+                        submit
+                    >
+                        Create new
+                    </btn>
+                </Link>
+            </div>
+        </div>
+        <div class="pt-4 sm:flex-auto">
+            <div
+                v-if="!hasItems"
+                class=""
+            >
+                <div class="m-auto mt-16 max-w-2xl">
+                    <div class="px-4 text-center">
+                        <div
+                            class="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-t from-slate-200 to-slate-100"
+                        >
+                            <svg
+                                class="h-6 w-5 fill-current"
+                                viewBox="0 0 20 24"
+                            >
+                                <path
+                                    class="text-slate-500"
+                                    d="M10 10.562l9-5-8.514-4.73a1 1 0 00-.972 0L1 5.562l9 5z"
+                                />
+                                <path
+                                    class="text-slate-300"
+                                    d="M9 12.294l-9-5v10.412a1 1 0 00.514.874L9 23.294v-11z"
+                                />
+                                <path
+                                    class="text-slate-400"
+                                    d="M11 12.294v11l8.486-4.714a1 1 0 00.514-.874V7.295l-9 4.999z"
+                                />
+                            </svg>
+                        </div>
+                        <h2 class="mb-2 text-2xl font-bold text-slate-800">
+                            No {{ modelPluralTitle }} available
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <dossier-table
+                v-show="hasItems"
+                v-model:tableOptions="tableOptions"
+                v-model:searching="searching"
+                v-model:hasItems="hasItems"
+                :title="title"
+                :search-term="searchTerm"
+                :collection="title"
+                :data="{{ modelPluralVariableName }}"
+                param="{{ modelVariableName }}"
+                edit-link="{{ routePrefix }}{{ modelHyphenatedSnakedPluralVariableName }}.edit"
+                >
+                <template #actions="attributes">
+                    <Link :href="route('{{ routePrefix }}{{ modelHyphenatedSnakedPluralVariableName }}.edit',{{{ modelSnakedVariableName }}:attributes.item.id})"
+                          class="text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-100">
+                        Edit
+                    </Link>
+                </template>
+            </dossier-table>
+        </div>
+    </app-layout>
+</template>
+
+<script setup>
+    import {ref} from 'vue'
+    import {Link} from '@inertiajs/inertia-vue3'
+    import AppLayout from '@/Admin/Layouts/AppLayout.vue'
+    import DossierTable from "@/Admin/Components/DossierTable.vue";
+    import Btn from "@/Admin/Components/btn.vue";
+
+    defineProps({
+        {{ modelPluralVariableName }}: Object,
+        title                        : String,
+    })
+
+    const loading = ref(true)
+    const searching = ref(false)
+    const hasItems = ref(false)
+    const searchTerm = ref('')
+    const tableOptions = ref({
+        sort: 'id',
+        sortOrder: 'asc',
+        checkboxes: true,
+        partials: {
+            actions: []
+        }
+    })
+</script>

@@ -1,0 +1,145 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedAction }};
+use App\Http\Controllers\Controller;
+use {{ namespacedRequest }};
+use {{ namespacedResource }};
+use {{ namespacedCollection }};
+use {{ namespacedModel }};
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
+use Inertia\Response;
+use Spatie\QueryBuilder\QueryBuilder;
+
+class {{ model }}Controller extends Controller
+{
+    /**
+     * Uses the {{ model }} model to check permissions against
+     *
+     * @var class-string
+     */
+    protected string $model = {{ model }}::class;
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function index(Request $request): Response
+    {
+        $model = QueryBuilder::for({{ model }}::class)
+                    ->allowedSorts(['id', 'created_at']);
+        return Inertia::render(
+            component: '{{ componentPrefix }}{{ modelPlural }}/Index',
+            props: [
+                '{{ modelPluralVariableName }}' => new {{ model }}CollectionResource(
+                    resource: $model->paginate(perPage: $request->perPage())
+                ),
+            ]
+        );
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create(): Response
+    {
+        return Inertia::render(component: '{{ componentPrefix }}{{ modelPlural }}/Create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param {{ request }} $request
+     * @param {{ action }} ${{ actionVariableName }}
+     *
+     * @return RedirectResponse
+     */
+    public function store({{ request }} $request, {{ action }} ${{ actionVariableName }}): RedirectResponse
+    {
+        ${{ modelVariableName }} = ${{ actionVariableName }}->run(
+            model: new {{ model }},
+            request: $request
+        );
+
+        return $this->intendedRedirect(
+            route: '{{ routePrefix }}{{ modelHyphenatedSnakedPluralVariableName }}.edit',
+            parameters: ['{{ modelSnakedVariableName }}' => ${{ modelVariableName }}]
+        );
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param {{ model }} ${{ modelVariableName }}
+     *
+     * @return Response
+     */
+    public function show({{ model }} ${{ modelVariableName }})
+    {
+        return Inertia::render(
+            component: '{{ componentPrefix }}{{ modelPlural }}/Show',
+            props: [
+                '{{ modelVariableName }}' => {{ resource }}::make(${{ modelVariableName }}),
+            ]
+        );
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param {{ model }} ${{ modelVariableName }}
+     *
+     * @return Response
+     */
+    public function edit({{ model }} ${{ modelVariableName }})
+    {
+        return Inertia::render(
+            component: '{{ componentPrefix }}{{ modelPlural }}/Edit',
+            props: [
+                '{{ modelVariableName }}' => {{ resource }}::make(${{ modelVariableName }}),
+            ]
+        );
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param {{ request }} $request
+     * @param {{ model }} ${{ modelVariableName }}
+     * @param {{ action }} ${{ actionVariableName }}
+     *
+     * @return Response
+     */
+    public function update({{ request }} $request, {{ model }} ${{ modelVariableName }}, {{ action }} ${{ actionVariableName }})
+    {
+        ${{ modelVariableName }} = ${{ actionVariableName }}->run(
+            model: ${{ modelVariableName }},
+            request: $request
+        );
+
+        return $this->intendedRedirect(route: '{{ routePrefix }}{{ modelHyphenatedSnakedPluralVariableName }}.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param {{ model }} ${{ modelVariableName }}
+     *
+     * @return Response
+     */
+    public function destroy({{ model }} ${{ modelVariableName }})
+    {
+        ${{ modelVariableName }}->delete();
+
+        return Redirect::back();
+    }
+}

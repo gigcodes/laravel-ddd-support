@@ -1,0 +1,41 @@
+<template>
+    <form
+        ref="formElement"
+        @submit.prevent="onSubmit"
+    >
+        <div class="grid gap-y-2">
+
+        </div>
+    </form>
+</template>
+
+<script setup>
+    import { ref, watch } from 'vue'
+    import useSiteForm from '@/Composables/useSiteForm'
+    import FormField from '@/Admin/Components/Form/FormField.vue'
+
+    const props = defineProps({
+        {{ modelVariableName }} : Object,
+        url    : String,
+        method : {
+            type    : String,
+            default : 'post'
+        },
+    })
+
+    const formElement = ref(null)
+
+    const form = useSiteForm(formElement, {
+
+    })
+
+    const onSubmit = () => {
+        form.submit(props.url, props.method)
+    }
+
+    watch(() => props.{{ modelVariableName }}, (new{{ model }}) => {
+        form.defaults(new{{ model }})
+    })
+
+    defineExpose(form)
+</script>
