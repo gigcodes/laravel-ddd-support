@@ -26,14 +26,14 @@ class SetupModelCommand extends Command
      */
     public function handle(): int
     {
-        $name      = $this->argument('name');
+        $name = $this->argument('name');
         $namespace = $this->option('namespace') ? "{$this->option('namespace')}/" : null;
         $domainNamespace = false;
         if ($this->option('admin')) {
             $namespace = "Admin/{$namespace}";
         }
 
-        if($this->option("domain")){
+        if ($this->option('domain')) {
             $domainNamespace = true;
         }
 
@@ -58,18 +58,18 @@ class SetupModelCommand extends Command
         $this->call('make:policy', ['name' => "{$name}Policy", '--model' => $name]);
 
         $this->call('setup:views', [
-            'name'           => $name,
-            '--admin'        => $this->option('admin'),
+            'name' => $name,
+            '--admin' => $this->option('admin'),
         ]);
 
         //Create the controller
         $this->call('make:inertia-controller', [
-            'name'               => "{$namespacedName}Controller",
-            '--model'            => $name,
-            '--resource'         => "{$name}Resource",
-            '--request'          => "{$namespacedName}Request",
-            '--action'           => "{$namespace}Persist{$name}Action",
-            '--route-prefix'     => $this->option('admin') ? 'admin::' : '',
+            'name' => "{$namespacedName}Controller",
+            '--model' => $name,
+            '--resource' => "{$name}Resource",
+            '--request' => "{$namespacedName}Request",
+            '--action' => "{$namespace}Persist{$name}Action",
+            '--route-prefix' => $this->option('admin') ? 'admin::' : '',
             '--component-prefix' => $this->option('admin') ? 'Admin::' : '',
         ]);
 

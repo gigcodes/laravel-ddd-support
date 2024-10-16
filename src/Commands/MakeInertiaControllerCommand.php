@@ -43,7 +43,7 @@ class MakeInertiaControllerCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
@@ -55,7 +55,7 @@ class MakeInertiaControllerCommand extends GeneratorCommand
      *
      * Remove the base default import if we are already in the base namespace.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @throws FileNotFoundException
      */
@@ -63,11 +63,11 @@ class MakeInertiaControllerCommand extends GeneratorCommand
     {
         $baseName = str_replace('Controller', '', class_basename($name));
 
-        $modelClass                = App::getNamespace().'Models\\'.($this->option('model') ?? $baseName);
-        $resourceClass             = App::getNamespace().'Http\\Resources\\'.($this->option('resource') ?? $baseName.'Resource');
-        $resourceCollectionClass   = App::getNamespace().'Http\\Resources\\'.($this->option('collection') ?? $baseName.'CollectionResource');
-        $requestClass              = App::getNamespace().'Http\\Requests\\'.($this->option('request') ?? $baseName.'Request');
-        $actionClass               = App::getNamespace().'Actions\\'.($this->option('action') ?? 'Persist'.$baseName.'Action');
+        $modelClass = App::getNamespace().'Models\\'.($this->option('model') ?? $baseName);
+        $resourceClass = App::getNamespace().'Http\\Resources\\'.($this->option('resource') ?? $baseName.'Resource');
+        $resourceCollectionClass = App::getNamespace().'Http\\Resources\\'.($this->option('collection') ?? $baseName.'CollectionResource');
+        $requestClass = App::getNamespace().'Http\\Requests\\'.($this->option('request') ?? $baseName.'Request');
+        $actionClass = App::getNamespace().'Actions\\'.($this->option('action') ?? 'Persist'.$baseName.'Action');
 
         $replace = array_merge(
             $this->buildReplacements($modelClass, 'model'),
@@ -77,7 +77,7 @@ class MakeInertiaControllerCommand extends GeneratorCommand
             $this->buildReplacements($resourceCollectionClass, 'collection')
         );
 
-        $replace['{{ routePrefix }}']     = $this->option('route-prefix');
+        $replace['{{ routePrefix }}'] = $this->option('route-prefix');
         $replace['{{ componentPrefix }}'] = $this->option('component-prefix');
 
         return str_replace(
@@ -92,16 +92,16 @@ class MakeInertiaControllerCommand extends GeneratorCommand
      */
     protected function buildReplacements(string $class, string $type): array
     {
-        $class       = Str::replace('/', '\\', $class);
+        $class = Str::replace('/', '\\', $class);
         $ucFirstType = Str::ucfirst($type);
 
         return [
-            "{{ {$type} }}"                                   => Str::of($class)->classBasename(),
-            "{{ {$type}Plural }}"                             => Str::of($class)->classBasename()->plural(),
-            "{{ namespaced{$ucFirstType} }}"                  => $class,
-            "{{ {$type}VariableName }}"                       => Str::of($class)->classBasename()->camel()->singular(),
-            "{{ {$type}PluralVariableName }}"                 => Str::of($class)->classBasename()->camel()->plural(),
-            "{{ {$type}SnakedVariableName }}"                 => Str::of($class)->classBasename()->snake()->singular(),
+            "{{ {$type} }}" => Str::of($class)->classBasename(),
+            "{{ {$type}Plural }}" => Str::of($class)->classBasename()->plural(),
+            "{{ namespaced{$ucFirstType} }}" => $class,
+            "{{ {$type}VariableName }}" => Str::of($class)->classBasename()->camel()->singular(),
+            "{{ {$type}PluralVariableName }}" => Str::of($class)->classBasename()->camel()->plural(),
+            "{{ {$type}SnakedVariableName }}" => Str::of($class)->classBasename()->snake()->singular(),
             "{{ {$type}HyphenatedSnakedPluralVariableName }}" => Str::of($class)->classBasename()->snake('-')->plural(),
         ];
     }

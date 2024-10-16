@@ -43,7 +43,7 @@ class MakePolicyCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
@@ -55,14 +55,14 @@ class MakePolicyCommand extends GeneratorCommand
      *
      * Remove the base default import if we are already in the base namespace.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @throws FileNotFoundException
      */
     protected function buildClass($name): string
     {
         $policyNamespace = $this->getNamespace($name);
-        $modelClass      = App::getNamespace().'Models\\'.($this->option('model') ?? str_replace('Policy', '', class_basename($name)));
+        $modelClass = App::getNamespace().'Models\\'.($this->option('model') ?? str_replace('Policy', '', class_basename($name)));
 
         $replace = $this->buildReplacements($modelClass);
 
@@ -81,8 +81,8 @@ class MakePolicyCommand extends GeneratorCommand
     protected function buildReplacements(string $modelClass): array
     {
         return [
-            '{{ model }}'             => class_basename($modelClass),
-            '{{ namespacedModel }}'   => $modelClass,
+            '{{ model }}' => class_basename($modelClass),
+            '{{ namespacedModel }}' => $modelClass,
             '{{ modelVariableName }}' => Str::of(class_basename($modelClass))->camel()->singular(),
         ];
     }

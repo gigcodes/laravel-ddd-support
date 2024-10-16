@@ -2,9 +2,9 @@
 
 namespace Gigcodes\LaravelDddSupport\Tests;
 
+use Gigcodes\LaravelDddSupport\LaravelDddSupportServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Gigcodes\LaravelDddSupport\LaravelDddSupportServiceProvider;
 
 class TestCase extends Orchestra
 {

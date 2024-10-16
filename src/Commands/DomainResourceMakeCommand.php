@@ -11,6 +11,7 @@ class DomainResourceMakeCommand extends ResourceMakeCommand
     protected function getDefaultNamespace($rootNamespace): string
     {
         $domainName = $this->argument('name');
+
         return $rootNamespace.'\Domain\\'.$domainName.'\Resources';
     }
 }

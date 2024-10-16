@@ -37,9 +37,9 @@ class MakeInertiaViewCommand extends GeneratorCommand
 
         if ($this->getNameInput() === 'Create' || $this->getNameInput() === 'Edit') {
             $this->call('make:inertia-view', [
-                'name'           => 'Form',
-                '--model'        => $this->option('model'),
-                '--admin'        => $this->option('admin'),
+                'name' => 'Form',
+                '--model' => $this->option('model'),
+                '--admin' => $this->option('admin'),
                 '--route-prefix' => $this->option('route-prefix'),
             ]);
         }
@@ -50,7 +50,7 @@ class MakeInertiaViewCommand extends GeneratorCommand
     /**
      * Get the destination class path.
      *
-     * @param string $name
+     * @param  string  $name
      */
     protected function getPath($name): string
     {
@@ -84,7 +84,7 @@ class MakeInertiaViewCommand extends GeneratorCommand
      *
      * Remove the base default import if we are already in the base namespace.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @throws FileNotFoundException
      */
@@ -111,12 +111,12 @@ class MakeInertiaViewCommand extends GeneratorCommand
         $class = Str::replace('/', '\\', $class);
 
         return [
-            '{{ model }}'                                   => Str::of($class)->classBasename(),
-            '{{ modelTitle }}'                              => Str::of($class)->classBasename()->singular()->headline(),
-            '{{ modelPluralTitle }}'                        => Str::of($class)->classBasename()->plural()->headline(),
-            '{{ modelVariableName }}'                       => Str::of($class)->classBasename()->camel()->singular(),
-            '{{ modelPluralVariableName }}'                 => Str::of($class)->classBasename()->camel()->plural(),
-            '{{ modelSnakedVariableName }}'                 => Str::of($class)->classBasename()->snake()->singular(),
+            '{{ model }}' => Str::of($class)->classBasename(),
+            '{{ modelTitle }}' => Str::of($class)->classBasename()->singular()->headline(),
+            '{{ modelPluralTitle }}' => Str::of($class)->classBasename()->plural()->headline(),
+            '{{ modelVariableName }}' => Str::of($class)->classBasename()->camel()->singular(),
+            '{{ modelPluralVariableName }}' => Str::of($class)->classBasename()->camel()->plural(),
+            '{{ modelSnakedVariableName }}' => Str::of($class)->classBasename()->snake()->singular(),
             '{{ modelHyphenatedSnakedPluralVariableName }}' => Str::of($class)->classBasename()->snake('-')->plural(),
         ];
     }

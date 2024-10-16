@@ -45,7 +45,7 @@ class MakeAction extends GeneratorCommand
     /**
      * Gets the namespace for the class to use
      *
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
@@ -55,7 +55,7 @@ class MakeAction extends GeneratorCommand
     /**
      * Gets the name for the class to create
      *
-     * @param string $name
+     * @param  string  $name
      */
     protected function qualifyClass($name): string
     {
@@ -67,7 +67,7 @@ class MakeAction extends GeneratorCommand
      *
      * Remove the base controller import if we are already in the base namespace.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @throws FileNotFoundException
      */
@@ -103,8 +103,8 @@ class MakeAction extends GeneratorCommand
 
         return array_merge($replace, [
             '{{ namespacedModel }}' => $modelClass,
-            '{{ model }}'           => class_basename($modelClass),
-            '{{ modelVariable }}'   => lcfirst(class_basename($modelClass)),
+            '{{ model }}' => class_basename($modelClass),
+            '{{ modelVariable }}' => lcfirst(class_basename($modelClass)),
         ]);
     }
 
@@ -118,7 +118,7 @@ class MakeAction extends GeneratorCommand
         $requestClass = $this->generateFormRequest($modelClass, $namespace);
 
         return array_merge($replace, [
-            '{{ request }}'           => class_basename($requestClass),
+            '{{ request }}' => class_basename($requestClass),
             '{{ namespacedRequest }}' => $namespace.'\\'.str_replace('/', '\\', $requestClass),
         ]);
     }

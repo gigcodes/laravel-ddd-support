@@ -28,23 +28,23 @@ class SetupInertiaViews extends Command
         $name = $this->argument('name');
 
         $this->call('make:inertia-view', [
-            'name'           => 'Index',
-            '--admin'        => $this->option('admin'),
-            '--model'        => $name,
+            'name' => 'Index',
+            '--admin' => $this->option('admin'),
+            '--model' => $name,
             '--route-prefix' => $this->option('admin') ? 'admin::' : '',
         ]);
 
         $this->call('make:inertia-view', [
-            'name'           => 'Create',
-            '--admin'        => $this->option('admin'),
-            '--model'        => $name,
+            'name' => 'Create',
+            '--admin' => $this->option('admin'),
+            '--model' => $name,
             '--route-prefix' => $this->option('admin') ? 'admin::' : '',
         ]);
 
         $this->call('make:inertia-view', [
-            'name'           => 'Edit',
-            '--admin'        => $this->option('admin'),
-            '--model'        => $name,
+            'name' => 'Edit',
+            '--admin' => $this->option('admin'),
+            '--model' => $name,
             '--route-prefix' => $this->option('admin') ? 'admin::' : '',
         ]);
 

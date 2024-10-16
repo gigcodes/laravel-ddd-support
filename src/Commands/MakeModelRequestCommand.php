@@ -28,13 +28,13 @@ class MakeModelRequestCommand extends RequestMakeCommand
     /**
      * Build the class with the given name.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @throws FileNotFoundException
      */
     protected function buildClass($name): string
     {
-        $baseName   = Str::of($name)->classBasename()->replace('Request', '');
+        $baseName = Str::of($name)->classBasename()->replace('Request', '');
         $modelClass = App::getNamespace().'Models\\'.($this->option('model') ?? $baseName);
 
         $content = parent::buildClass($name);
